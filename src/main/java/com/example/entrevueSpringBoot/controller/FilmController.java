@@ -19,6 +19,8 @@ import com.example.entrevueSpringBoot.exception.FilmNotFoundException;
 import com.example.entrevueSpringBoot.model.Film;
 import com.example.entrevueSpringBoot.service.FilmService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping(path = {"/film"})
 public class FilmController {
@@ -29,11 +31,13 @@ public class FilmController {
 	private static final Logger logger =
 			LoggerFactory.getLogger(FilmController.class);
 	
+	@Operation(summary = "Get list of all films")
 	@GetMapping
 	public List<Film> getAll() {
 		return this.filmService.getAll();
 	}
 	
+	@Operation(summary = "Get a Film by its ID")
 	@GetMapping("/{id}")
 	public Film getById(@PathVariable long id) {
 		Film film = this.filmService.getFilmById(id);
@@ -45,8 +49,9 @@ public class FilmController {
 		return film;
 	}
 	
+	@Operation(summary = "Create a new a film")
 	@PostMapping
-	public ResponseEntity<Film> save(@RequestBody Film film) {
+	public ResponseEntity<Film> create(@RequestBody Film film) {
 		
 		if (film == null)
 			return ResponseEntity.noContent().build();
